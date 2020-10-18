@@ -4,7 +4,9 @@
 ###### 1.先获取微信小程序 SDK 源码 
 ###### 2.将 ZLZZ-WX-SDK/wxSDK 文件放入小程序 utils文件夹内
 ###### 3.在 app.js 文件中通过 require() 引入 SDK 
-` var zlzzSDK = require('./utils/ZLZZ-WX-SDK/wxSDK.js') ` 
+### 
+    var zlzzSDK = require('./utils/ZLZZ-WX-SDK/wxSDK.js')
+    
 
 ### 配置初始化
 ###### 引入 SDK 后，可通过 init() 进行 SDK 初始化参数配置： 
