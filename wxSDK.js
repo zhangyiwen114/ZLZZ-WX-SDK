@@ -39,7 +39,7 @@ zjzzObj.Component = function (option) {
   }
 }
 zjzzObj.quick = function () {
- 
+
   var arg0 = arguments[0];
   var arg1 = arguments[1];
   var arg2 = arguments[2];
@@ -48,7 +48,7 @@ zjzzObj.quick = function () {
   if (arg0 === 'getAnonymousID') {
     if (_.isEmptyObject(zjzzObj.store._state)) {
       logger.info('请先初始化SDK');
-     
+
     } else {
       return zjzzObj.store._state._first_id || zjzzObj.store._state.first_id || zjzzObj.store._state._distinct_id || zjzzObj.store._state.distinct_id;
     }
@@ -99,7 +99,7 @@ var customEvents = function (obj) {
 
   // }, 1000);
 
-  console.log('进入自定义事件', propevent, pagesappHideevent, "----");
+  //console.log('进入自定义事件', propevent, pagesappHideevent, "----");
   const currentTimempEnd =
     new Date().getFullYear() + '-' +
     (new Date().getMonth() + 1) + '-' +
@@ -120,13 +120,13 @@ var customEvents = function (obj) {
       ObjToString(pagesappHideevent[pagesappHideevent.length - 2].options) :
       "",
     duration: propevent.event_duration * 1000,
-    is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
-    is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time	,//是否首次触发的事件	,//是否首次触发的事件	
+    is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
+    is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件	,//是否首次触发的事件	
     is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
     depth: pagesappHideevent.length//当前页面的层级	
   })
   wx.setStorageSync('ZLZZ_Res_Data_Properties', resobj.properties)
-  console.log("appHide resobj", resobj);
+  //console.log("appHide resobj", resobj);
 
 }
 
@@ -137,30 +137,9 @@ zjzzObj.autoTrackCustom = {
     zjzzObj.para.autoTrack && r && ("function" == typeof r ? (s = r(), _.isObject(s) && _.extend(t, s)) : _.isObject(r) && (_.extend(t, r), zjzzObj.para.autoTrack[e] = !0), zjzzObj.track(a, t))
   },
   appLaunch: function (e) {
-
-    console.log("进MPLaunch");
+   
     var getZLZZ_SDK_Option_Data = wx.getStorageSync('ZLZZ_SDK_Option_Data') || []
-    // if (getZLZZ_SDK_Option_Data) {
-    //   if (!getZLZZ_SDK_Option_Data.todayTime) {
-
-    //     //今日未登陆
-    //     getZLZZ_SDK_Option_Data.todayTime =
-    //       new Date().getFullYear() + '-' +
-    //       (new Date().getMonth() + 1) + '-' +
-    //       new Date().getDate() + ' ' +
-    //       new Date().getHours() + ':' +
-    //       (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
-    //       (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
-    //     wx.setStorageSync('ZLZZ_SDK_Option_Data', getZLZZ_SDK_Option_Data)
-    //   }
-    // }
-
-    //if (!getZLZZ_SDK_Option_Data || !getZLZZ_SDK_Option_Data.openId) {
-      //登陆
-       getlogin()//获取用户唯一标识
-   // }
-
-
+  
     if (typeof this === 'object' && !this['trackCustom']) {
       this[zjzzObj.para.name] = zjzzObj;
     }
@@ -189,17 +168,15 @@ zjzzObj.autoTrackCustom = {
 
     prop.$url_query = _.setQuery(e.query);
 
-
     prop = _.extend(prop, true);
-
 
     zjzzObj.track('$MPLaunch', prop);
 
     //
 
-    console.log('初始化', this.globalData);
+    //console.log('初始化', this.globalData);
     //小程序初始化完成时触发或者小程序进入后台一定时间后被微信杀死进程后再次启动小程序时触发
-    console.log('进入appLaunch', e, this.globalData.userInfo);
+    //console.log('进入appLaunch', e, this.globalData.userInfo);
     //获取系统当前时间
     const currentTimeappLaunch =
       new Date().getFullYear() + '-' +
@@ -216,31 +193,18 @@ zjzzObj.autoTrackCustom = {
       url_params: ObjToString(e.query),
       last_path: "",
       last_params: "",
-      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
+      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
       is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件	
       is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
       depth: 1//当前页面的层级	
     })
     wx.setStorageSync('ZLZZ_Res_Data_Properties', resobj.properties)
-    console.log("pageLoad resobj", resobj);
+    //console.log("pageLoad resobj", resobj);
   },
   appShow: function (e) {
     //小程序启动时触发或者从后台切换到前台时触发，包括首次启动
     countDown()//开启倒计时
     var getZLZZ_SDK_Option_DataappShow = wx.getStorageSync('ZLZZ_SDK_Option_Data') || []
-    // if (!getZLZZ_SDK_Option_DataappShow.todayTime) {
-
-    //   //今日未登陆
-    //   getZLZZ_SDK_Option_DataappShow.todayTime =
-    //     new Date().getFullYear() + '-' +
-    //     (new Date().getMonth() + 1) + '-' +
-    //     new Date().getDate() + ' ' +
-    //     new Date().getHours() + ':' +
-    //     (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
-    //     (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
-    //   wx.setStorageSync('ZLZZ_SDK_Option_Data', getZLZZ_SDK_Option_DataappShow)
-    // }
-
 
     var oldPage = Page;
     Page = function (option) {
@@ -273,8 +237,8 @@ zjzzObj.autoTrackCustom = {
     prop.$url_query = _.setQuery(e.query);
     prop = _.extend(prop, true);
     zjzzObj.track('$MPShow', prop);
-    // zjzzObj.autoTrackCustom.trackCustom('appShow', prop, '$MPShow');
-    console.log('进入appShow', prop, e);
+   
+    //console.log('进入appShow', prop, e);
     const currentTimempStart =
       new Date().getFullYear() + '-' +
       (new Date().getMonth() + 1) + '-' +
@@ -290,13 +254,13 @@ zjzzObj.autoTrackCustom = {
       url_params: prop.$url_query,
       last_path: "",
       last_params: "",
-      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
+      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
       is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件	
       is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
       depth: 1//当前页面的层级	
     })
     wx.setStorageSync('ZLZZ_Res_Data_Properties', resobj.properties)
-    console.log("appShow resobj", resobj);
+    //console.log("appShow resobj", resobj);
   },
   appHide: function () {
 
@@ -313,7 +277,7 @@ zjzzObj.autoTrackCustom = {
     zjzzObj.track('$MPHide', prop);
 
     zjzzObj.sendStrategy.onAppHide();
-    console.log('进入appHide', prop, pagesappHide);
+    // console.log('进入appHide', prop, pagesappHide);
     const currentTimempEnd =
       new Date().getFullYear() + '-' +
       (new Date().getMonth() + 1) + '-' +
@@ -334,13 +298,13 @@ zjzzObj.autoTrackCustom = {
         ObjToString(pagesappHide[pagesappHide.length - 2].options) :
         "",
       duration: prop.event_duration * 1000,
-      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
+      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
       is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件	
       is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
       depth: pagesappHide.length//当前页面的层级	
     })
     wx.setStorageSync('ZLZZ_Res_Data_Properties', resobj.properties)
-    console.log("appHide resobj", resobj);
+    //console.log("appHide resobj", resobj);
   },
   pageLoad: function (e) {
     //console.log('进入pageLoad',e);
@@ -361,7 +325,7 @@ zjzzObj.autoTrackCustom = {
       (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
       (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
     var pageShowpages = getCurrentPages();
-    console.log('进入pageShow', pageShowpages);
+    // console.log('进入pageShow', pageShowpages);
     resobj.properties.push({
       event: "mpView",
       event_time: currentTimempView,
@@ -375,16 +339,16 @@ zjzzObj.autoTrackCustom = {
         ObjToString(pageShowpages[pageShowpages.length - 2].options) :
         "",
       duration: propshow.event_duration * 1000,
-      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
+      is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
       is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件	
       is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
       depth: pageShowpages.length//当前页面的层级
     })
     wx.setStorageSync('ZLZZ_Res_Data_Properties', resobj.properties)
-    console.log("pageShow resobj", resobj);
+    //console.log("pageShow resobj", resobj);
   },
   pageShare: function (e) {
-    console.log('进入pageShare', e);
+    //console.log('进入pageShare', e);
     var oldMessage = e.onShareAppMessage;
 
     e.onShareAppMessage = function () {
@@ -670,94 +634,7 @@ zjzzObj.Page = function (option) {
   }
   Page.apply(this, arguments);
 };
-var mp_scene = {
-  1000: '其他',
-  1001: '发现栏小程序主入口，「最近使用」列表（基础库2.2.4版本起包含「我的小程序」列表）',
-  1005: '顶部搜索框的搜索结果页',
-  1006: '发现栏小程序主入口搜索框的搜索结果页',
-  1007: '单人聊天会话中的小程序消息卡片',
-  1008: '群聊会话中的小程序消息卡片',
-  1010: '收藏夹',
-  1011: '扫描二维码',
-  1012: '长按图片识别二维码',
-  1013: '手机相册选取二维码',
-  1014: '小程序模版消息',
-  1017: '前往体验版的入口页',
-  1019: '微信钱包',
-  1020: '公众号 profile 页相关小程序列表',
-  1022: '聊天顶部置顶小程序入口',
-  1023: '安卓系统桌面图标',
-  1024: '小程序 profile 页',
-  1025: '扫描一维码',
-  1026: '附近小程序列表',
-  1027: '顶部搜索框搜索结果页“使用过的小程序”列表',
-  1028: '我的卡包',
-  1029: '卡券详情页',
-  1030: '自动化测试下打开小程序',
-  1031: '长按图片识别一维码',
-  1032: '手机相册选取一维码',
-  1034: '微信支付完成页',
-  1035: '公众号自定义菜单',
-  1036: 'App 分享消息卡片',
-  1037: '小程序打开小程序',
-  1038: '从另一个小程序返回',
-  1039: '摇电视',
-  1042: '添加好友搜索框的搜索结果页',
-  1043: '公众号模板消息',
-  1044: '带 shareTicket 的小程序消息卡片（详情)',
-  1045: '朋友圈广告',
-  1046: '朋友圈广告详情页',
-  1047: '扫描小程序码',
-  1048: '长按图片识别小程序码',
-  1049: '手机相册选取小程序码',
-  1052: '卡券的适用门店列表',
-  1053: '搜一搜的结果页',
-  1054: '顶部搜索框小程序快捷入口',
-  1056: '音乐播放器菜单',
-  1057: '钱包中的银行卡详情页',
-  1058: '公众号文章',
-  1059: '体验版小程序绑定邀请页',
-  1064: '微信连Wi-Fi状态栏',
-  1067: '公众号文章广告',
-  1068: '附近小程序列表广告',
-  1069: '移动应用',
-  1071: '钱包中的银行卡列表页',
-  1072: '二维码收款页面',
-  1073: '客服消息列表下发的小程序消息卡片',
-  1074: '公众号会话下发的小程序消息卡片',
-  1077: '摇周边',
-  1078: '连Wi-Fi成功页',
-  1079: '微信游戏中心',
-  1081: '客服消息下发的文字链',
-  1082: '公众号会话下发的文字链',
-  1084: '朋友圈广告原生页',
-  1088: '会话中查看系统消息，打开小程序',
-  1089: '微信聊天主界面下拉',
-  1090: '长按小程序右上角菜单唤出最近使用历史',
-  1091: '公众号文章商品卡片',
-  1092: '城市服务入口',
-  1095: '小程序广告组件',
-  1096: '聊天记录',
-  1097: '微信支付签约页',
-  1099: '页面内嵌插件',
-  1102: '公众号 profile 页服务预览',
-  1103: '发现栏小程序主入口，“我的小程序”列表',
-  1104: '微信聊天主界面下拉，“我的小程序”栏',
-  1106: '聊天主界面下拉，从顶部搜索结果页，打开小程序',
-  1107: '订阅消息，打开小程序',
-  1113: '安卓手机负一屏，打开小程序(三星)',
-  1114: '安卓手机侧边栏，打开小程序(三星)',
-  1124: '扫“一物一码”打开小程序',
-  1125: '长按图片识别“一物一码”',
-  1126: '扫描手机相册中选取的“一物一码”',
-  1129: '微信爬虫访问',
-  1131: '浮窗打开小程序',
-  1133: '硬件设备打开小程序',
-  1146: '地理位置信息打开出行类小程序',
-  1148: '卡包-交通卡，打开小程序',
-  1150: '扫一扫商品条码结果页打开小程序',
-  1153: '“识物”结果页打开小程序'
-};
+
 
 
 var source_channel_standard = 'utm_source utm_medium utm_campaign utm_content utm_term';
@@ -902,7 +779,7 @@ var latest_share_info = ['$latest_share_distinct_id', '$latest_share_url_path', 
 
 })();
 zjzzObj.prepareData = function (p, callback) {
-  console.log("分享前-----前", p);
+  //console.log("分享前-----前", p);
   var data = {
     distinct_id: this.store.getDistinctId(),
     lib: {
@@ -943,7 +820,7 @@ zjzzObj.prepareData = function (p, callback) {
 
   _.searchObjDate(data);
   _.searchObjString(data);
-  console.log("分享前");
+  //console.log("分享前");
   logger.info(data);
 
   zjzzObj.sendStrategy.send(data);
@@ -1322,7 +1199,7 @@ _.setLatestChannel = function (channel) {
 _.getMPScene = function (key) {
   if (typeof key === "number" || (typeof key === "string" && key !== "")) {
     key = String(key);
-    return mp_scene[key] || key;
+    return '其他';
   } else {
     return "未取到值";
   }
@@ -1392,9 +1269,9 @@ let logger = "object" == typeof logger ? logger : {};
 
 logger.info = function () {
   if (zjzzObj.para.show_log && "object" == typeof console && console.log) try {
-    console.log("arguments[0]__share", arguments)
+    // console.log("arguments[0]__share", arguments)
     if (arguments && arguments[0] && arguments[0].event == "$MPShare") {
-      console.log("调分享方法啦")
+      // console.log("调分享方法啦")
       var current_timepageShare = (new Date()).getTime();
       var propshowcurrent_timepageShare = {};
       propshowcurrent_timepageShare.$url_path = _.getCurrentPath();
@@ -1409,7 +1286,7 @@ logger.info = function () {
         (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
         (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
       var pageShowpagespageShare = getCurrentPages();
-      console.log('进入pageShare', pageShowpagespageShare);
+      // console.log('进入pageShare', pageShowpagespageShare);
       resobj.properties.push({
         event: "mpShare",
         event_time: currentTimeShare,
@@ -1423,24 +1300,24 @@ logger.info = function () {
           ObjToString(pageShowpagespageShare[pageShowpagespageShare.length - 2].options) :
           "",
         duration: propshowcurrent_timepageShare.event_duration * 1000,
-        is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').triggerTime),//是否首天触发的事件	
+        is_first_day: computerTime(wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_day),//是否首天触发的事件	
         is_first_time: wx.getStorageSync('ZLZZ_SDK_Option_Data').is_first_time,//是否首次触发的事件		
         is_login: wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id ? true : false,//是否为登录状态	
         depth: pageShowpagespageShare.length//当前页面的层级	
       })
-      console.log("pageShare resobj", resobj);
+      //console.log("pageShare resobj", resobj);
 
 
 
     }
-    return console.log.apply(console, arguments)
+    //return console.log.apply(console, arguments)
   } catch (e) {
-    console.log(arguments[0])
+    // console.log(arguments[0])
   }
 }
 
 //appId
-//const project_id = wx.getAccountInfoSync().miniProgram.appId
+//let project_id = wx.getAccountInfoSync().miniProgram.appId
 const urlObj = getCurrentPages()
 const url_path = urlObj
 //当前时间
@@ -1461,11 +1338,11 @@ let resobj = {
     udid: "",
     user_id: "",
     distinct_id: "",
-    app_id: "",
+    app_id: wx.getAccountInfoSync().miniProgram.appId,
     platform: "",
     time: "",
-    sdk_type: "小程序",
-    sdk_version: "",
+    sdk_type: "MP",
+    sdk_version: "1.1.0",
     screen_height: 0,
     screen_width: 0,
     manufacturer: "",
@@ -1473,8 +1350,8 @@ let resobj = {
     network: "",
     os: "",
     os_version: "",
-    carrier: "",
-    app_version: "",
+    //carrier: "",
+    // app_version: "",
     time: currentTime
   },
   properties: []
@@ -1496,7 +1373,7 @@ function formatSystem(system) {
 function getSystemInfo() {
   wx.getSystemInfo({
     "success": function (t) {
-      // console.log('t', t,wx);
+      //  console.log('t获取手机情况', t);
       // getlogin()//获取用户唯一标识
 
       resobj.common.manufacturer = t["brand"];
@@ -1509,24 +1386,30 @@ function getSystemInfo() {
       resobj.common.os_version = t["system"].indexOf(' ') > -1 ? t["system"].split(' ')[1] : t["system"];
     }
   })
-  var pages = getCurrentPages();
 
-  console.log("urels", pages);
-  pages
 }
 getSystemInfo()
 
+function getNetwork() {
+  wx.getNetworkType({
+    "success": function (t) {
+      // console.log('t获取手机情况', t.networkType);
+      resobj.common.network = t.networkType
+    }
 
+  })
+}
+getNetwork()
 setTimeout(() => {
   var pages = getCurrentPages();
 
-  console.log("urels", pages);
+  //console.log("urels", pages);
 }, 1000);
 
 
 
 function post(url, params) {
-  console.log(url, params)
+  // console.log(url, params)
   return url;
 }
 
@@ -1540,7 +1423,7 @@ App = function (e) {
 
 var oldPage = Page;
 Page = function (e) {
- 
+
   var t = zjzzObj.para.autoTrack && zjzzObj.para.autoTrack.mpClick && _.getMethods(e);
   if (t)
     for (var a = 0, r = t.length; a < r; a++) click_proxy(e, t[a]);
@@ -1594,9 +1477,9 @@ var isfulldata = function () {
 
   var data = wx.getStorageSync('ZLZZ_Res_Data_Properties') || []
   if (data && data.length & data.length >= 100) {
-    console.log("满足条件可以发请求");
+    //console.log("满足条件可以发请求");
   } else if (true) {
-    console.log("满足条件可以发请求");
+   // console.log("满足条件可以发请求");
   }
 }
 
@@ -1648,7 +1531,7 @@ function getSign(params) {
 
 function paramsStrSort(paramsStr) {
   var url = paramsStr;
-  console.log('paramsStr', paramsStr);
+  //console.log('paramsStr', paramsStr);
 
   var urlStr = url.split("&").sort().join("&");
 
@@ -1660,142 +1543,89 @@ var distinct_id = ""//kepler系统用户唯一标识
 var debug_mode = "no_debug"////no_debug:关闭Debug模式;debug_and_import:开启Debug模式并导入数据;debug_and_not_import:开始Debug模式不导入数据
 var project_id = ""
 
+var ZLZZ_SDK_Option_Data_Storage = {
+  openId: "",//唯一值
+  distinct_id: "", //真正唯一值
+  user_id: "",//是否登陆判断条件
+  is_first_time: true,//是否历史上第一次触发
+  is_first_day: ""//是否是第一天触发 和第二天0点比较
+}
+
 var init = function (obj) {
-  debug_mode = obj.debug_mode || "no_debug"
+  debug_mode = obj.debug_mode
   project_id = obj.project_id
-  console.log('init函数', obj);
+
   let ZLZZ_SDK_Option_Dataobj = wx.getStorageSync('ZLZZ_SDK_Option_Data')
 
-   if (ZLZZ_SDK_Option_Dataobj && ZLZZ_SDK_Option_Dataobj.user_id) {
-      ZLZZ_SDK_Option_Dataobj.user_id = obj.user_id
-      wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobj)
-      //！第一次登陆
-      var postidentificationtime = (new Date()).getTime()
-      Api.postFormid('/api/v1/identification/' + obj.project_id + "?time=" + postidentificationtime,
-        {
-          "user_id": obj.user_id,
-          "udid": wx.getStorageSync('ZLZZ_SDK_Option_Data').openId
-        }
-        ,
-        getSign({
-          "time": postidentificationtime
-        })
-        , function (res) {
-          distinct_id = res.data.data.distinct_id
-    
-          let ZLZZ_SDK_Option_Dataobjres = wx.getStorageSync('ZLZZ_SDK_Option_Data')
-          ZLZZ_SDK_Option_Dataobjres.distinct_id = res.data.data.distinct_id
-          if (ZLZZ_SDK_Option_Dataobjres && ZLZZ_SDK_Option_Dataobjres.triggerTime) {
-             //二次登陆
-            ZLZZ_SDK_Option_Dataobjres.is_first_time=false
-            wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobjres)
-          }else{
-           
-    
-             //首次登陆时间
-                  
-             let ZLZZ_SDK_Option_Dataobjresis_first_time={
-              is_first_time:true,
-              triggerTime: new Date().getFullYear() + '-' +
-              (new Date().getMonth() + 1) + '-' +
-              new Date().getDate() + ' ' +
-              new Date().getHours() + ':' +
-              (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
-              (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
-             }
-             wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobjresis_first_time)
-          }
-         
-    
-    
-          console.log('init函数distinct_id', distinct_id);
-        })
-    
-    
-      //
-   }else{
-  
-    let ZLZZ_SDK_Option_Dataobjuser_id={
-      user_id:""
-    }
-    ZLZZ_SDK_Option_Dataobj=ZLZZ_SDK_Option_Dataobjuser_id
-    wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobj)
-    //第一次登陆
+  if (ZLZZ_SDK_Option_Dataobj) {
+    //以前初始化过， 可能登陆过
+
+    ZLZZ_SDK_Option_Data_Storage = Object.assign(ZLZZ_SDK_Option_Data_Storage, ZLZZ_SDK_Option_Dataobj)
+    ZLZZ_SDK_Option_Data_Storage.is_first_time = false
+   // console.log("以前初始化过， 可能登陆过ZLZZ_SDK_Option_Data_Storage", ZLZZ_SDK_Option_Data_Storage);
+    var postidentificationtimed = (new Date()).getTime()
+    Api.postFormid('/api/v1/identification/' + obj.project_id + "?time=" + postidentificationtimed,
+      {
+        "user_id": obj.user_id || "",
+        "udid": ZLZZ_SDK_Option_Data_Storage.openId
+      }
+      ,
+      getSign({
+        "time": postidentificationtimed
+      })
+      , function (ress) {
+        ZLZZ_SDK_Option_Data_Storage.distinct_id = ress.data.data.distinct_id
+        distinct_id = ress.data.data.distinct_id
+
+        let jsonZLZZ_SDK_Option_Data_Storage = JSON.parse(JSON.stringify(ZLZZ_SDK_Option_Data_Storage))
+       // console.log("最后一次确认ZLZZ_SDK_Option_Data_Storage", jsonZLZZ_SDK_Option_Data_Storage);
+        wx.setStorageSync('ZLZZ_SDK_Option_Data', jsonZLZZ_SDK_Option_Data_Storage)
+      })
+
+
+  } else {
+    //以前未初始化过，未登陆，先获取 openid 唯一标识值
     wx.login({
       success: res => {
-        console.log('wx.login', res);
-        ZLZZ_SDK_Openid = res.code || ""
-  
-        var ZLZZ_SDK_Time =
-          new Date().getFullYear() + '-' +
+        ZLZZ_SDK_Option_Data_Storage.openId = res.code
+        ZLZZ_SDK_Option_Data_Storage.is_first_day = new Date().getFullYear() + '-' +
           (new Date().getMonth() + 1) + '-' +
           new Date().getDate() + ' ' +
           new Date().getHours() + ':' +
           (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
           (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
-        var ZLZZ_SDK_Option_Data = {
-          openId: ZLZZ_SDK_Openid
-          
-        }
-     
-        wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Data)
+        ZLZZ_SDK_Option_Data_Storage.user_id = obj.user_id || ""
+
+
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         var postidentificationtime = (new Date()).getTime()
         Api.postFormid('/api/v1/identification/' + obj.project_id + "?time=" + postidentificationtime,
           {
-            "user_id": obj.user_id,
-            "udid": wx.getStorageSync('ZLZZ_SDK_Option_Data').openId
+            "user_id": obj.user_id || "",
+            "udid": res.code
           }
           ,
           getSign({
             "time": postidentificationtime
           })
-          , function (res) {
-            distinct_id = res.data.data.distinct_id
-      
-            let ZLZZ_SDK_Option_Dataobjres = wx.getStorageSync('ZLZZ_SDK_Option_Data')
-            ZLZZ_SDK_Option_Dataobjres.distinct_id = res.data.data.distinct_id
-            if (ZLZZ_SDK_Option_Dataobjres && ZLZZ_SDK_Option_Dataobjres.triggerTime) {
-               //二次登陆
-              ZLZZ_SDK_Option_Dataobjres.is_first_time=false
-              wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobjres)
-            }else{
-             
-      
-               //首次登陆时间
-                    
-               let ZLZZ_SDK_Option_Dataobjresis_first_time={
-                is_first_time:true,
-                triggerTime: new Date().getFullYear() + '-' +
-                (new Date().getMonth() + 1) + '-' +
-                new Date().getDate() + ' ' +
-                new Date().getHours() + ':' +
-                (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
-                (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
-               }
-               wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobjresis_first_time)
-            }
-           
-      
-      
-            console.log('init函数distinct_id', distinct_id);
+          , function (ress) {
+            ZLZZ_SDK_Option_Data_Storage.distinct_id = ress.data.data.distinct_id
+            distinct_id = ress.data.data.distinct_id
+            wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Data_Storage)
           })
-      
-      
+
+
       }
     })
-   }
- 
- 
-
-
-  // }
+  }
 
 }
+
+
 //保存埋点请求
 var postTrack = function () {
 
-  console.log('保存埋点请求---------');
+  //console.log('保存埋点请求---------');
 
   var ppostTracktime = (new Date()).getTime()
   var postTrackData = {
@@ -1807,6 +1637,12 @@ var postTrack = function () {
     "properties": wx.getStorageSync('ZLZZ_Res_Data_Properties') || []
 
   }
+  postTrackData.common.udid = wx.getStorageSync('ZLZZ_SDK_Option_Data').openId
+  postTrackData.common.user_id = (wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id) ?
+    wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id : ""
+  //postTrackData.common.app_id = wx.getAccountInfoSync().miniProgram.appId
+  postTrackData.common.platform = "Mp"
+
   postTrackData.common.distinct_id = wx.getStorageSync('ZLZZ_SDK_Option_Data').distinct_id
   Api.postFormid('/api/v1/track/' + project_id + "?time=" + ppostTracktime,
     postTrackData
@@ -1818,12 +1654,12 @@ var postTrack = function () {
 
       wx.setStorageSync('ZLZZ_Res_Data_Properties', [])
       resobj.properties = []
-      console.log('保存埋点请求 成功啦');
+      //console.log('保存埋点请求 成功啦');
       //countDown()//继续倒计时
     },
     function (err) {
       // countDown()//继续倒计时
-      console.log('保存埋点请求 失败啦');
+      // console.log('保存埋点请求 失败啦');
     })
 
 }
@@ -1832,13 +1668,15 @@ var postTrack = function () {
 //保存画像请求
 var postProfile = function (obj) {
 
-  console.log('保存画像请求---------');
+  //console.log('保存画像请求---------');
   let postProfiledata = {
 
     project_id: project_id,
     type: "user_profile",
     debug_mode: obj.debug_mode,
     common: {
+
+
       "distinct_id": (wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').distinct_id) ?
         wx.getStorageSync('ZLZZ_SDK_Option_Data').distinct_id : "",
       "user_id": (wx.getStorageSync('ZLZZ_SDK_Option_Data') && wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id) ?
@@ -1864,7 +1702,7 @@ var postProfile = function (obj) {
 
   }
   postProfiledata.property = Object.assign(postProfiledata.property, obj.property)
-  console.log('保存画像请求postProfiledata', postProfiledata);
+  //console.log('保存画像请求postProfiledata', postProfiledata);
   var ppostTracktime = (new Date()).getTime()
   Api.postFormid('/api/v1/user_profile/' + project_id + "?time=" + ppostTracktime,
     postProfiledata
@@ -1879,7 +1717,7 @@ var postProfile = function (obj) {
         new Date().getHours() + ':' +
         (new Date().getMinutes() > 9 ? new Date().getMinutes() : ("0" + new Date().getMinutes())) + ':' +
         (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds())))
-      console.log('cg保存画像请求');
+      //console.log('cg保存画像请求');
     })
 
 }
@@ -1888,7 +1726,7 @@ var postProfile = function (obj) {
 var getlogin = function () {
   wx.login({
     success: res => {
-      console.log('wx.login', res);
+      //  console.log('wx.login', res);
       ZLZZ_SDK_Openid = res.code || ""
 
       var ZLZZ_SDK_Time =
@@ -1900,10 +1738,10 @@ var getlogin = function () {
         (new Date().getSeconds() > 9 ? new Date().getSeconds() : ("0" + new Date().getSeconds()))
       var ZLZZ_SDK_Option_Data = {
         openId: ZLZZ_SDK_Openid
-        
+
       }
-   
-      wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Data)
+
+      // wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Data)
       // 发送 res.code 到后台换取 openId, sessionKey, unionId
     }
   })
@@ -1912,13 +1750,13 @@ var getlogin = function () {
 //wx.getStorageSync('ZLZZ_SDK_Option_Data').user_id
 
 var login = function (obj) {
+  //一定初始化了，
+
   debug_mode = debug_mode || "no_debug"
   project_id = project_id
-  console.log('login函数', obj);
-  // let ZLZZ_SDK_Option_Dataobj = wx.getStorageSync('ZLZZ_SDK_Option_Data')
-  // // if ((ZLZZ_SDK_Option_Dataobj && ZLZZ_SDK_Option_Dataobj.user_id)) {
-  // ZLZZ_SDK_Option_Dataobj.user_id = obj.user_id
-  // wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobj)
+  let ZLZZ_SDK_Option_Dataobjlogin = wx.getStorageSync('ZLZZ_SDK_Option_Data')
+  ZLZZ_SDK_Option_Dataobjlogin = Object.assign(ZLZZ_SDK_Option_Data_Storage, ZLZZ_SDK_Option_Dataobjlogin)
+  ZLZZ_SDK_Option_Dataobjlogin.is_first_time = false
 
   var postidentificationtime = (new Date()).getTime()
   Api.postFormid('/api/v1/identification/' + project_id + "?time=" + postidentificationtime,
@@ -1931,15 +1769,15 @@ var login = function (obj) {
       "time": postidentificationtime
     })
     , function (res) {
-      distinct_id = res.data.data.distinct_id
-      let ZLZZ_SDK_Option_Datalogins = wx.getStorageSync('ZLZZ_SDK_Option_Data')
+      // distinct_id = res.data.data.distinct_id
+      // let ZLZZ_SDK_Option_Datalogins = wx.getStorageSync('ZLZZ_SDK_Option_Data')
 
-      ZLZZ_SDK_Option_Datalogins.user_id = obj.user_id
-      ZLZZ_SDK_Option_Datalogins.distinct_id = res.data.data.distinct_id
-      wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Datalogins)
+      ZLZZ_SDK_Option_Dataobjlogin.user_id = obj.user_id
+      ZLZZ_SDK_Option_Dataobjlogin.distinct_id = res.data.data.distinct_id
+      wx.setStorageSync('ZLZZ_SDK_Option_Data', ZLZZ_SDK_Option_Dataobjlogin)
 
 
-      console.log('init函数distinct_id', distinct_id);
+      // console.log('init函数distinct_id', distinct_id);
     })
 
 
